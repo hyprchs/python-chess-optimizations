@@ -1775,6 +1775,15 @@ class BaseBoardTestCase(unittest.TestCase):
         a.set_piece_map({})
         self.assertNotEqual(a, b)
 
+    def test_board_fen_respects_piece_at_override(self):
+        class OverrideBoard(chess.BaseBoard):
+            def piece_at(self, square):
+                if square == chess.E4:
+                    return chess.Piece(chess.KING, chess.WHITE)
+                return None
+
+        self.assertEqual(OverrideBoard.empty().board_fen(), "8/8/8/8/4K3/8/8/8")
+
 
 class SquareSetTestCase(unittest.TestCase):
 
