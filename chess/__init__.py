@@ -1157,7 +1157,10 @@ class BaseBoard:
         # board bitboards and avoid allocating Piece objects per occupied square.
         # If piece_at() is overridden in a subclass, fall back to the original
         # behavior so custom piece lookup semantics are preserved.
-        if type(self).piece_at is BaseBoard.piece_at:
+        if (
+            type(self).piece_at is BaseBoard.piece_at and
+            type(self).piece_type_at is BaseBoard.piece_type_at
+        ):
             append = builder.append
             occupied = self.occupied
             occupied_white = self.occupied_co[WHITE]
